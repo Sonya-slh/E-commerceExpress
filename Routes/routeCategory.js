@@ -1,0 +1,11 @@
+const controllerCategory=require("../Controllers/controllerCategory")
+const validate_attribut = require("../middleware/validate_attribut")
+const downloadFile=require("../middleware/downloadFile")
+const authentification = require("../middleware/authentification")
+const route=require("express").Router()
+route.post("/add",downloadFile.single("image"),validate_attribut(["Name","description","image"]),controllerCategory.createCategory)
+route.get("/list",authentification,controllerCategory.listCategory)
+route.delete("/delete/:id",authentification,controllerCategory.deleteCategory)
+route.delete("/deleteall",controllerCategory.deleteAllCategory)
+route.put("/update/:id",controllerCategory.updateCategory)
+module.exports=route;

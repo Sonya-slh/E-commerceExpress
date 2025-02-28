@@ -1,0 +1,5 @@
+const mongoose= require('mongoose')
+const modelUser = require('./modelUser')
+const adminSchema=new mongoose.Schema({})
+modelUser.discriminator("Admin",adminSchema)
+module.exports= mongoose.model('Admin')
