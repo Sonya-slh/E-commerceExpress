@@ -49,13 +49,13 @@ const loginUser = async (req, res) => {
       const accessToken = generateAccesstoken(user);
       const refreshToken = generateRefreshtoken(user);
       console.log("1", refreshtokens);
-      refreshtokens.push(refreshtoken);
+      refreshtokens.push(refreshToken);
       console.log("2", refreshtokens);
       res.status(200).json({
         message: "Success",
         data: user,
-        accesstoken: accesstoken,
-        refreshtoken: refreshtoken,
+        accesstoken: accessToken,
+        refreshtoken: refreshToken,
       });
     }
   } catch (error) {
@@ -182,5 +182,4 @@ const profil =(async(req,res)=>{
     })
   }
 })
-
 module.exports = { loginUser, verifyed, forgetPass, resetpass, logoutUser,profil};

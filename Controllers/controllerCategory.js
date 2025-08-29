@@ -19,7 +19,7 @@ await category.save(req.body,(error,item)=>{
 })
 const listCategory =(async(req,res)=>{
     try {
-        const Category=await modelCategory.find()
+        const Category=await modelCategory.find().populate("SubCategorys")
         res.status(200).json({
             message: "Success",
             data:Category

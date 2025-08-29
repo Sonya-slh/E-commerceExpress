@@ -6,4 +6,5 @@ route.get("/list",controllerSubCategory.listSubCategory)
 route.delete("/delete/:id",controllerSubCategory.deleteAllSubCategory)
 route.delete("/deleteAll",controllerSubCategory.deleteAllSubCategory)
 route.put("/update/:id",controllerSubCategory.updateSubCategory)
+route.get("/list/:id",controllerSubCategory.getSubCategoryById)
 module.exports=route;

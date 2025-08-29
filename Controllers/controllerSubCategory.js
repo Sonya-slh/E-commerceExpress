@@ -97,4 +97,21 @@ const deleteAllSubCategory=(async(req,res)=>{
         })
     }
 })
-module.exports={createSubCategory,listSubCategory,updateSubCategory,deleteSubCategory,deleteAllSubCategory}
+const getSubCategoryById = (async(req , res)=>{
+    const subCategoryget = await modelSubCategory.findOne({_id:req.params.id}).populate({
+        path:"Products",
+        model:"products"
+    })
+    if(!subCategoryget){
+        res.status(400).json({
+            message:"Subcategory not found"
+        })
+    }
+    else{
+        res.status(200).json({
+            message:"subcategory found",
+            data:subCategoryget
+        })
+    }
+})
+module.exports={createSubCategory,listSubCategory,updateSubCategory,deleteSubCategory,deleteAllSubCategory,getSubCategoryById}
