@@ -4,14 +4,35 @@ const cors=require("cors")// autorisation l donees
 const dotenv = require('dotenv');
 app.use(cors());
 dotenv.config();
+const crypto= require("crypto")
 
 const port= process.env.port
 
 const database=require("./db")
 app.use(express.json())
+const csrfTokens = new Map();
+function generateCsrfToken(sessionId) {
+  const token = crypto.randomBytes(32).toString('hex');
+  csrfTokens.set(sessionId, token);
+  return token;
+}
+app.post('/get-csrf-token', (req, res) => {
+  const sessionId = crypto.randomBytes(16).toString('hex'); // générer un ID unique
+  const csrfToken = generateCsrfToken(sessionId);
+
+  res.cookie('sessionId', sessionId, {
+    httpOnly: true,
+    sameSite: 'Strict',
+    secure: true, // ⚠️ à utiliser seulement en HTTPS
+  });
+
+  res.json({ csrfToken });
+});
+
 app.get('/',(req,res)=>{
     res.send("Bienvenu")
 });
+
 const routeCategory=require('./Routes/routeCategory')
 app.use('/Category',routeCategory)
 const routeSubCategory=require('./Routes/routeSubCategory')
@@ -21,7 +42,7 @@ app.use('/products',routeProduct)
 
 
 const routeAdmin=require('./Routes/routeAdmin')
-app.use('/Admin',routeAdmin)
+app.use('/Admin', routeAdmin, )
 const CommandeRoute=require('./Routes/CommandeRoute')
 app.use('/Commande',CommandeRoute)
 
